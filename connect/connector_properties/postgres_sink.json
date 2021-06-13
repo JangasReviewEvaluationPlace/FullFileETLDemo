@@ -1,0 +1,14 @@
+{
+  "name": "PostgresNLPSinkConnector",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+    "connection.url": "jdbc:postgresql://pg-db-nlp:5432/nlp_db",
+    "connection.user": "nlp_db_user",
+    "connection.password": "db_password",
+    "topics": "review-etl",
+    "poll.interval.ms": "1000",
+    "tasks.max": "1",
+    "auto.create": "true",
+    "table.name.format": "review"
+  }
+}
