@@ -2,7 +2,6 @@
 .idea/
 .env
 output/
-data/
 .DS_Store
 __pycache__/
 *.pyc

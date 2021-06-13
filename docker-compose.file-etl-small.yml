@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  etl:
+    build: ./FilleETL
+    container_name: nanogiants_hackathon_filedemo_etl
+    working_dir: /etl/
+    environment:
+      - STEMMING_REQUIRED=False
+      - SFTP_HOSTNAME=sftp
+      - SFTP_PORT=2222
+      - SFTP_USERNAME=demouser
+      - SFTP_PASSWORD=demopassword
+    command:
+      - sh
+      - -c
+      - |
+        poetry run python main.py run --chunk-size=20 --copy-to-sftp=True
+    volumes:
+      - ./data/amazon_100_rows.csv:/etl/amazon_reviews/data/amazon_100_rows.csv
+      - ./FilleETL/etl/amazon_reviews/output:/etl/amazon_reviews/output
+    depends_on:
+      - sftp
+
+  sftp:
+    image: ghcr.io/linuxserver/openssh-server
+    container_name: nanogiants_hackathon_filedemo_sftp
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+      - PASSWORD_ACCESS=true
+      - USER_NAME=demouser
+      - USER_PASSWORD=demopassword
+    ports:
+      - 2222:2222
+    restart: unless-stopped
