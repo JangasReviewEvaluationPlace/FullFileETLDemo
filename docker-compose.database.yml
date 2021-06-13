@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  pg-db-nlp:
+    image: postgres:alpine
+    container_name: nanogiants_hackathon_pg_nlp
+    ports:
+      - 54321:5432
+    environment:
+      - POSTGRES_DB=nlp_db
+      - POSTGRES_USER=nlp_db_user
+      - POSTGRES_PASSWORD=db_password
+    volumes:
+      - pg-db-nlp-data:/var/lib/postgresql/data/
+
+volumes:
+  pg-db-nlp-data:
